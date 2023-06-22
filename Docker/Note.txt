@@ -1,0 +1,22 @@
+# Docker
+
+---
+
+1. docker -> it allows us to create a container
+2. container:-windows app container required windows host
+linux app container required linux host
+3. docket help us to run and application in isolated environment 
+4. Parts of Docker
+    
+    
+    - 1. Docker Runtime
+        
+        Runtime → Docker engine → orchestration
+        Runtime →  allows us to start and stop container
+        
+        1. Low leve Runtime (runc) → it works with os and start and stops the containers
+        2. ContainerD  → its role is to manage runc, container interaction with the network
+        pulling the images  
+    - 2.,Docker Engine
+        
+        we use it to interact with docker
