@@ -1,0 +1,706 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Docker</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-interactiveBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-translucentGray { background-color: rgba(255, 255, 255, 0.0375); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="c43de3e2-b999-4221-8e3d-05db6a820da7" class="page sans"><header><h1 class="page-title">Docker</h1><p class="page-description"></p></header><div class="page-body"><p id="7ae80e35-a84d-4a16-a7ca-6e991e84ef1d" class="">
+</p><hr id="d12bb5cf-9cfb-4973-ae47-08ecf29bf20f"/><ol type="1" id="13890636-12ed-4cf3-b631-52adc81b8747" class="numbered-list" start="1"><li>docker -&gt; it allows us to create a container</li></ol><ol type="1" id="25b81015-8f87-464a-ae03-64bea73c11d4" class="numbered-list" start="2"><li>container:-windows app container required windows host
+linux app container required linux host</li></ol><ol type="1" id="778ec284-c7c3-424b-ac62-05b70193625c" class="numbered-list" start="3"><li>docket help us to run and application in isolated environment </li></ol><ol type="1" id="6c495b14-d71e-42ca-9ba9-3ffafe18f935" class="numbered-list" start="4"><li>Parts of Docker<ul id="f94c4fca-7e18-40a6-94cf-45228ff5401a" class="toggle"><li><details open=""><summary>1. Docker Runtime</summary><p id="b5fada94-addc-44b7-884d-af0ee43cbff5" class="">Runtime → Docker engine → orchestration
+Runtime →  allows us to start and stop container<div class="indented"><ol type="1" id="100bc346-ed7d-4e47-81bd-f36cc15b3ac8" class="numbered-list" start="1"><li>Low leve Runtime (runc) → it works with os and start and stops the containers</li></ol><ol type="1" id="d1a547d5-f021-47db-a822-99bd8ba6594b" class="numbered-list" start="2"><li>ContainerD  → its role is to manage runc, container interaction with the network
+pulling the images  </li></ol></div></p></details></li></ul><ul id="abd53beb-8d3e-42c3-b0ea-15cc96ccb83f" class="toggle"><li><details open=""><summary>2.Docker Engine</summary><p id="55dcad89-7bcc-415e-a0b7-36c09d285974" class="">we use it to interact with docker { Docker Daemon }
+it creates client server architecture</p><figure id="3d519e24-689a-4cc8-9354-7e15b7b9e769" class="image"><a href="Docker%20c43de3e2b99942218e3d05db6a820da7/Untitled.png"><img style="width:384px" src="Docker%20c43de3e2b99942218e3d05db6a820da7/Untitled.png"/></a></figure></details></li></ul><ul id="3e376b19-7407-411e-818f-5b3fed74d5b7" class="toggle"><li><details open=""><summary>3.<strong>orchestration</strong></summary><p id="53d9ccda-c567-43bc-9e4d-82b9699960f0" class="">update the version , remove the systems , scale the systems 
+toh ye sab automatically hona chahiye </p></details></li></ul></li></ol><ol type="1" id="df57bf0b-8f9a-4e0b-8f72-c35b098bc468" class="numbered-list" start="5"><li>see once we have to show ship the running application it is difficuilt but we can share instruction to someone with the help of file called docker image </li></ol><ol type="1" id="b2121cf0-4a0f-4c43-9f30-d5fbb3af6439" class="numbered-list" start="6"><li>DockerFile  —&gt;  Image  —&gt; Container
+and image can be shared to the other people</li></ol><ol type="1" id="ffefe160-62a4-4f5b-8bc6-dca2604b51d3" class="numbered-list" start="7"><li>Different Container Runtimes:<ol type="a" id="bf688c4a-f7d4-46d1-b3fd-918315b7935d" class="numbered-list" start="1"><li>container d</li></ol><ol type="a" id="47293a68-ca43-4f56-9078-3f9ed2909222" class="numbered-list" start="2"><li>lxc</li></ol><ol type="a" id="281aea80-9ebb-4ff6-b215-c5d586e496d8" class="numbered-list" start="3"><li>runc</li></ol><ol type="a" id="2d226a6a-cbbe-433f-9176-ed01f13055f1" class="numbered-list" start="4"><li>cri-o</li></ol><ol type="a" id="ae7af166-ba02-4807-b4c6-869928b4ab3a" class="numbered-list" start="5"><li>rkt</li></ol></li></ol><ol type="1" id="a4492104-8a1c-4efe-84fd-7c6e4ea7e1a9" class="numbered-list" start="8"><li>Which container should we use ➖
+<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong>Open Container Initiative </strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong> </li></ol><ol type="1" id="82eea8e8-5262-4160-a092-936823c62e1b" class="numbered-list" start="9"><li></li></ol><figure id="c14df509-57a5-464d-9d19-53a51a3e8d23" class="image"><a href="Docker%20c43de3e2b99942218e3d05db6a820da7/Untitled%201.png"><img style="width:480px" src="Docker%20c43de3e2b99942218e3d05db6a820da7/Untitled%201.png"/></a></figure><p id="72c94021-cd37-4a34-bec5-adb88a00cf23" class="">
+</p><figure class="block-color-gray_background callout" style="white-space:pre-wrap;display:flex" id="73362ffd-eb35-47fe-a6e4-f7304708f3cb"><div style="font-size:1.5em"><span class="icon">💡</span></div><div style="width:100%">1 . Interactive enviroment : dont exit out of the container  
+
+2. If we attach a bash to the end of the commnadn of the docker file then both the terminals gets connected
+
+3. read for the docker networking from the different sources</div></figure><h2 id="fb32e47c-6a9b-477b-a4b3-0c828df4f7a3" class="">Docker Commands</h2><hr id="dac1856a-f683-4209-8ce2-4d64349740e9"/><ul id="a3fc5966-dde3-4cff-9d13-e4b5e7e3d130" class="toggle"><li><details open=""><summary>1.Docker Run Hello-world</summary><p id="d1d8c6b8-0e3c-479f-945d-16a4ca04c037" class="">this is basic command to run for the docker file at first file is not present there so it can no track it so first it downloads from the docker hub and then ready to server and after installing it if we again hit the command then it doesn’t say that the file is missing
+hello-world is image name</p><p id="f4c19271-871f-4073-a9cb-6f432376f686" class="">
+</p></details></li></ul><ul id="9b8e78cd-192f-4fe5-b129-ccfaea3c8fa3" class="toggle"><li><details open=""><summary>$ docker images</summary><p id="5e379fb1-5cd7-4713-946b-a4875a0036ea" class="">it is used to check all the current running images</p></details></li></ul><ul id="fa694d47-491c-458a-9cc0-f7fcff7f7399" class="toggle"><li><details open=""><summary>$ docker ps</summary><p id="a22fb5e4-5564-458c-8e87-56693d3d7fa8" class="">it gives the list of the current running containers</p></details></li></ul><ul id="1b7beae7-e837-47ae-95a3-6d6e21889f8f" class="toggle"><li><details open=""><summary>$ docker container ls</summary><p id="dbf55999-f1bc-48d7-af93-5c562acb3ed8" class="">it will show all the containers</p></details></li></ul><ul id="273dcdbc-3576-46c9-b0f1-0b113b671063" class="toggle"><li><details open=""><summary>$ docker stop id </summary><p id="759841a1-37b9-4016-bba2-90a62c0e6866" class="">to stop the container with given id</p></details></li></ul><ul id="748dab58-a948-4c15-8c8c-2ed8742f538c" class="toggle"><li><details open=""><summary>$docker ps -a</summary><p id="28b6c47b-5292-453a-b6d3-f2520d9f1086" class="">it will show all the containers that has been stopped</p></details></li></ul><ul id="eb429256-f65a-4788-ad79-5d231934e870" class="toggle"><li><details open=""><summary>$ docker rm &lt;id&gt; </summary><p id="672f9617-1b1a-43dc-8c1b-e0c7d706e337" class="">to remove the docker containers </p></details></li></ul><ul id="10b4dc8f-190f-44d1-9f0e-3040ffebf278" class="toggle"><li><details open=""><summary>$ docker inspect &lt;name&gt;</summary><p id="ccebe1b5-9201-411a-936a-ea8d9ca8283c" class="">it gives all the information regarding the container</p></details></li></ul><ul id="843c47e5-3143-4faf-9864-83701fa15560" class="toggle"><li><details open=""><summary>$ docker container prune -f</summary><p id="c3618008-45c0-4518-95e7-eab0083269d3" class="">it deletes all the container 
+prune means delete all the containers
+-f means dont ask anyting just do it</p></details></li></ul><ul id="a814c604-6189-4dd9-8fcf-fb5b54c19ed8" class="toggle"><li><details open=""><summary>$ docker run alpine ping www.civo.com</summary><p id="60d83918-b17e-4009-8467-0a91e80c7d67" class="">it will download the alpine and will ping to the civo.com</p><p id="4de93153-5281-4dd7-8643-f0373137eaa4" class="">
+</p></details></li></ul><ul id="0850de68-fb96-4c26-b4cb-2cebd0fe6de4" class="toggle"><li><details open=""><summary>$ docker -d run alpine ping www.civo.com</summary><p id="cb63ffae-3d38-44fe-a40d-3f682dd584a2" class="">it will return id of conatiner and will ping it in the background</p></details></li></ul><ul id="08fb401a-bb54-455e-bcc5-4c6431eea9b2" class="toggle"><li><details open=""><summary>$ docker logs —since 5s &lt;container id&gt;</summary></details></li></ul><ul id="c616b665-14a9-44be-b87a-37a4c0c016e3" class="toggle"><li><details open=""><summary>$ docker rmi alpine -f </summary><p id="db39dea6-2c12-4a2e-8889-e8584898db97" class="">it will remove all the images from the docker </p></details></li></ul><ul id="71b47e75-7764-4c15-b1c6-719446700b72" class="toggle"><li><details open=""><summary>$ docker run -d nginx </summary><p id="1fa39aed-a4d3-4f6d-938d-10c8e19ee48e" class="">it will run the container niginx with default portal </p><p id="e90767f5-8f05-4d79-a1ed-a8c6e5556c5d" class="">
+</p></details></li></ul><ul id="82529668-3a4a-475f-9688-60f370f5f97e" class="toggle"><li><details open=""><summary>$ docker run -d -p  8080:80 nginx</summary><p id="0f1b2e41-581a-450c-a888-e5fde94763a9" class="">it is like forbidding the port …
+it means when we are going to port 8080 it will get the containers from 80 </p></details></li></ul><ul id="40ba0832-9670-461c-bcc1-e26b1111b6b8" class="toggle"><li><details open=""><summary>$ if we want</summary><p id="6a15629e-871a-4923-bf89-82475f692bd1" class=""> to share the container for the images inthe docker to the friend for that we can use commit messages </p><p id="d496681c-74c0-4ec0-9a66-179c9173c9af" class="">
+</p></details></li></ul><ul id="b177a869-5b69-4c5c-90f1-7d0e1e319649" class="toggle"><li><details open=""><summary>$ docker commit -m “added names file.txt “ 062a4370</summary></details></li></ul><ul id="0bceacfa-25f1-4d31-b42d-8827cf485b1a" class="toggle"><li><details open=""><summary>$ docker images -q :- it gives ids of the images</summary></details></li></ul><ul id="4e225999-1609-4ee8-874e-8c38fcbba093" class="toggle"><li><details open=""><summary>$ docker rmi (docker images -q)</summary></details></li></ul><ul id="e25a6884-3ba3-40c6-81e4-817d4824021a" class="toggle"><li><details open=""><summary>$ docker images -q —no-trunc 
+this returns the hash values of the images and it gets started with the image id letters</summary></details></li></ul><p id="f6866ab2-dd03-4ec5-b5d1-0a48ef06ab30" class="">
+</p><p id="bbad6d5e-7d50-4888-bc6c-9cd59db4706f" class="">
+</p><ul id="371ad077-efee-4d6e-bde8-3654b4d5c402" class="toggle"><li><details open=""><summary>Docker Layers :</summary><p id="f21fb2b6-39c5-45d4-9cd0-2119970e8a73" class="">there are certain custom things which run called as layers
+ex. ubntu image is the collection of 4 files that it self made up of images 
+some files are directly imported as they are alredy downloaded while the previous image was dowloaded if comong images are found they are not going to dowload them it makes it very fast</p><p id="6a69d12d-1564-4f71-a243-dc93007d0918" class="">
+</p><p id="1703b3bd-c79a-4a59-a2a2-7d8c05a40889" class="">
+</p><h2 id="a4bae159-8005-4dd7-9380-450961fb463f" class="">
+Create Our Own Images :- Docker files </h2></details></li></ul><p id="06be64aa-9b62-40f1-8de1-e188ce09b46f" class="">
+</p></div></article></body></html>
